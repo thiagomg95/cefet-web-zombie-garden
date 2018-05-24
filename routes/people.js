@@ -73,11 +73,11 @@ router.post('/', (req, res) => {
    db.query(query, function(err, result) {
      console.log(query)
      if (err) {
-       console.log('error')
+       console.log('Erro!')
        req.flash('error', JSON.stringify(err));
      } else {
        console.log('sucesso')
-       req.flash('success', 'Nasceu um bebê neste mundo apocalíptico.');
+       req.flash('success', 'Pessoa inserida com sucesso!');
      }
      res.redirect('/people/');
    });
@@ -98,10 +98,10 @@ router.delete('/:id', (req, res) => {
      console.log(query)
      if (err) {
        console.log('error')
-       req.flash('error', 'Pessoa inexistente');
+       req.flash('error', 'Pessoa não encontrada');
      } else {
        console.log('sucesso')
-       req.flash('success', 'A pessoa foi apagada');
+       req.flash('success', 'Indivíduo deletado com sucesso');
      }
      res.redirect('/people/');
    });
