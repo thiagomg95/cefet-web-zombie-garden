@@ -67,6 +67,13 @@ router.get('/new/', (req, res) => {
 //      - Em caso de sucesso do INSERT, colocar uma mensagem feliz
 //      - Em caso de erro do INSERT, colocar mensagem vermelhinha
 
+router.get('/', (req, res, next) => {
+
+  db.query({
+    sql: 'SELECT * FROM person values = person.name',
+  });
+});
+//insert into person values (null, 'Flavio Coutinho', 1, null);
 
 /* DELETE uma pessoa */
 // Exercício 2: IMPLEMENTAR AQUI
