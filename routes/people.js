@@ -67,14 +67,22 @@ router.get('/new/', (req, res) => {
 //      - Em caso de sucesso do INSERT, colocar uma mensagem feliz
 //      - Em caso de erro do INSERT, colocar mensagem vermelhinha
 
-router.get('/', (req, res, next) => {
-
-  db.query({
-    sql: 'SELECT * FROM person values = person.name',
-  });
-});
-//insert into person values (null, 'Flavio Coutinho', 1, null);
-
+router.post('/', (req, res) => {
+   const name = db.escape(req.body.name);
+   const query = `INSERT INTO person(name) value (${name})`
+   db.query(query, function(err, result) {
+     console.log(query)
+     if (err) {
+       console.log('error')
+       req.flash('error', JSON.stringify(err));
+     } else {
+       console.log('sucesso')
+       req.flash('success', 'Nasceu um bebê neste mundo apocalíptico.');
+     }
+     res.redirect('/people/');
+   });
+ });
+   
 /* DELETE uma pessoa */
 // Exercício 2: IMPLEMENTAR AQUI
 // Dentro da callback de tratamento da rota:
@@ -83,6 +91,20 @@ router.get('/', (req, res, next) => {
 //      - Em caso de sucesso do INSERT, colocar uma mensagem feliz
 //      - Em caso de erro do INSERT, colocar mensagem vermelhinha
 
-
+router.delete('/:id', (req, res) => {
+   const id = db.escape(req.params.id);
+   const query = 'DELETE FROM person WHERE id = ' + id;
+   db.query(query, function(err, result) {
+     console.log(query)
+     if (err) {
+       console.log('error')
+       req.flash('error', 'Pessoa inexistente');
+     } else {
+       console.log('sucesso')
+       req.flash('success', 'A pessoa foi apagada');
+     }
+     res.redirect('/people/');
+   });
+ });
 
 module.exports = router;
